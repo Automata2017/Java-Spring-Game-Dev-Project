@@ -34,8 +34,11 @@ public class GenreController {
     }
 
     @PostMapping("/genres/")
-    public String createGenre(@RequestBody String body){
-        return "creating a genre " + body;
+    public Genre createGenre(@RequestBody Genre genreObject){
+        System.out.println("calling createGenre");
+
+        Genre genre = genreRepository.findByName(genreObject.getName());
+        return genreRepository.save(genreObject);
     }
 
     @GetMapping("/genres/{genreId}/")
