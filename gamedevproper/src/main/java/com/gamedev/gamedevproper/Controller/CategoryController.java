@@ -30,7 +30,12 @@ public class CategoryController {
 
     @PutMapping("/categories/{categoryId}/")
     public String updateCategory(@PathVariable(value = "categoryId") Long categoryId, @RequestBody String body){
-        return "updating the category with Id of" + categoryId + body;
+        return "updating the category with Id of " + categoryId + body;
+    }
+
+    @DeleteMapping("/categories/{categoryId}/")
+    public String deleteCategory(@PathVariable(value = "categoryId") Long categoryId){
+        return "deleting the category with Id of " + categoryId;
     }
 
 
