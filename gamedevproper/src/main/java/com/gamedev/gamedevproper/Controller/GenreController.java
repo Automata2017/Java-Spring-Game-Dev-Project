@@ -12,7 +12,7 @@ public class GenreController {
     @Autowired
     public void setGenreRepository(GenreRepository genreRepository){
         this.genreRepository = genreRepository;
-        
+
     }
 
 
@@ -25,8 +25,8 @@ public class GenreController {
     @GetMapping("/genres/")
     public String getAllGenres(){
 
-
-        return "all genres";
+        System.out.println("calling getAllGenres");
+        return CategoryRepository.findAll();
     }
 
     @PostMapping("/genres/")
