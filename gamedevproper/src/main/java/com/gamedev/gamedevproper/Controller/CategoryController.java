@@ -28,5 +28,10 @@ public class CategoryController {
         return "getting the category with id of " + categoryId;
     }
 
+    @PutMapping("/categories/{categoryId}")
+    public String updateCategory(@PathVariable(value = "categoryId") Long categoryId, @RequestBody String body){
+        return "updating the category with Id of" + categoryId + body;
+    }
+
 
 }
