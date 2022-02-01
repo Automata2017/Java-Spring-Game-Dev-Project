@@ -1,7 +1,11 @@
 package com.gamedev.gamedevproper.Controller;
 
+import com.gamedev.gamedevproper.model.Genre;
+import com.gamedev.gamedevproper.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -23,10 +27,10 @@ public class GenreController {
     }
 
     @GetMapping("/genres/")
-    public String getAllGenres(){
+    public List<Genre> getAllGenres(){
 
         System.out.println("calling getAllGenres");
-        return CategoryRepository.findAll();
+        return genreRepository.findAll();
     }
 
     @PostMapping("/genres/")
