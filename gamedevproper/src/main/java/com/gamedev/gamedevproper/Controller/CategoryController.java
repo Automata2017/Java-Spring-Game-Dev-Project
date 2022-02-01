@@ -15,5 +15,10 @@ public class CategoryController {
         return "Hello World";
     }
 
+    @GetMapping("/catagories/")
+    public String getAllCategories(){
+        return "all categories";
+    }
+
 
 }
