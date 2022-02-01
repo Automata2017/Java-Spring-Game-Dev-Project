@@ -1,10 +1,18 @@
 package com.gamedev.gamedevproper.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api")
 public class CategoryController {
+
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    public void setCategoryRepository(CategoryRepository categoryRepository){
+        this.categoryRepository = categoryRepository;
+    }
 
 
 
