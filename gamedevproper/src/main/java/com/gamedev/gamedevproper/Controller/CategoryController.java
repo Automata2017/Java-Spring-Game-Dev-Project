@@ -1,8 +1,6 @@
 package com.gamedev.gamedevproper.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -18,6 +16,11 @@ public class CategoryController {
     @GetMapping("/categories/")
     public String getAllCategories(){
         return "all categories";
+    }
+
+    @PostMapping("/categories/")
+    public String createCategory(@RequestBody String body){
+        return"creating a category " + body;
     }
 
 
