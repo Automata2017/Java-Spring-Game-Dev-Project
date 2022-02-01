@@ -20,7 +20,12 @@ public class CategoryController {
 
     @PostMapping("/categories/")
     public String createCategory(@RequestBody String body){
-        return"creating a category " + body;
+        return "creating a category " + body;
+    }
+
+    @GetMapping("/categories/{categoryId}")
+    public String getCategory(@PathVariable Long categoryId){
+        return "getting the category with id of " + categoryId;
     }
 
 
