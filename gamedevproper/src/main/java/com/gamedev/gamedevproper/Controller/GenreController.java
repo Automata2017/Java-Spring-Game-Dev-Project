@@ -39,7 +39,7 @@ public class GenreController {
         return "Hello World";
     }
 
-    @GetMapping(/genres/)
+    @GetMapping("/genres/")
     public List<Genre> getAllGenres(){
         System.out.println("calling getAllGenres");
         return genreService.getAllGenres();
@@ -48,38 +48,19 @@ public class GenreController {
     @PostMapping("/genres/")
     public Genre createGenre(@RequestBody Genre genreObject){
         System.out.println("calling createGenre");
-
-        Genre genre = genreRepository.findByName(genreObject.getName());
-        if(genre != null){
-            throw new InformationExistException("genre with name " + genre.getName() + " already exists");
-        } else {
-            return genreRepository.save(genreObject);
-        }
+        return genreService.createGenre(genreObject)
     }
 
     @GetMapping("/genres/{genreId}/")
     public Optional<Genre> getGenre(@PathVariable(value = "genreId") Long genreId){
 
-        Optional<Genre> genre = genreRepository.findById(genreId);
-        if(genre.isPresent()){
-            return genre;
-        } else {
-            throw new InformationNotFoundException("genre with Id " + genre + " not found");
-        }
+        return genreService.getGenre(genreId);
 
     }
 
     @PutMapping("/genres/{genreId}/")
     public Genre updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
-        Optional<Genre> genre = genreRepository.findById(genreId);
-        if(genre.isPresent()){
-             Genre updateGenre = genreRepository.findById(genreId).get();
-            updateGenre.setName(genreObject.getName());
-            updateGenre.setDescription(genreObject.getDescription());
-            return genreRepository.save(updateGenre);
-        } else {
-            throw new InformationNotFoundException("genre with Id" + genreId + " not found");
-        }
+        return genreService.updateGenre(genreId, genreObject);
     }
 
     @DeleteMapping("/genres/{genreId}/")
