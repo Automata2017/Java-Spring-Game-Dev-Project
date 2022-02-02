@@ -60,13 +60,22 @@ public class GenreController {
     }
 
     @PutMapping("/genres/{genreId}/")
-    public String updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody String body){
-        return "updating the genre with Id of " + genreId + body;
+    public String updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
+        Optional<Genre> genre = genreRepository.findById(genreId);
+        if(genre.isPresent()){
+            if(genre)
+        }
     }
 
     @DeleteMapping("/genres/{genreId}/")
-    public String deleteGenre(@PathVariable(value = "genreId") Long genreId){
-        return "deleting the genre with Id of " + genreId;
+    public Optional<Genre> deleteGenre(@PathVariable(value = "genreId") Long genreId){
+        Optional<Genre> genre = genreRepository.findById(genreId);
+        if(genre.isPresent()){
+            genreRepository.deleteById(genreId);
+            return genre;
+        } else {
+            throw new InformationNotFoundException("genre with id" + genreId + " not found");
+        }
     }
 
 
