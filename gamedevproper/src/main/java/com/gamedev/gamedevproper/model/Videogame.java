@@ -117,4 +117,12 @@ public class Videogame {
     public void setReleased(boolean released) {
         isReleased = released;
     }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
 }

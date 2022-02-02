@@ -5,6 +5,7 @@ import com.gamedev.gamedevproper.exceptions.InformationNotFoundException;
 import com.gamedev.gamedevproper.model.Genre;
 import com.gamedev.gamedevproper.model.Videogame;
 import com.gamedev.gamedevproper.repository.GenreRepository;
+import com.gamedev.gamedevproper.repository.VideogameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,13 @@ public class GenreService {
     @Autowired
     public void setGenreRepository(GenreRepository genreRepository){
         this.genreRepository = genreRepository;
+    }
+
+    private VideogameRepository videogameRepository;
+
+    @Autowired
+    public void setVideogameRepository(VideogameRepository videogameRepository){
+        this.videogameRepository = videogameRepository;
     }
 
 
@@ -74,7 +82,7 @@ public class GenreService {
 
         Optional<Genre> genre= genreRepository.findById(genreId);
         videogameObject.setGenre(genre.get());
-        return videogameRepository.save()
+        return videogameRepository.save();
 
     }
 
