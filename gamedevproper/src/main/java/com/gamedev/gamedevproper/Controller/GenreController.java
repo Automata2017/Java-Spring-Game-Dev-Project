@@ -48,7 +48,9 @@ public class GenreController {
 
     @GetMapping("/genres/{genreId}/")
     public Optional<Genre> getGenre(@PathVariable(value = "genreId") Long genreId){
+
         Optional<Genre> genre = genreRepository.findById(genreId);
+
 
         return genre;
 
