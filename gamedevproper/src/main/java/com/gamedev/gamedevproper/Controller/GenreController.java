@@ -60,10 +60,15 @@ public class GenreController {
     }
 
     @PutMapping("/genres/{genreId}/")
-    public String updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
+    public Genre updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
         Optional<Genre> genre = genreRepository.findById(genreId);
         if(genre.isPresent()){
-            if(genre)
+//            if(genreObject.getName().equals(c))
+        } else {
+            Genre updateGenre = genreRepository.findById(genreId).get();
+            updateGenre.setName(genreObject.getName());
+            updateGenre.setDescription(genreObject.getDescription());
+            return genreRepository.save(updateGenre);
         }
     }
 
