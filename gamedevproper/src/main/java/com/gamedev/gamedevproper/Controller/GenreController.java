@@ -63,7 +63,7 @@ public class GenreController {
     public Genre updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
         Optional<Genre> genre = genreRepository.findById(genreId);
         if(genre.isPresent()){
-            Genre updateGenre = genreRepository.findById(genreId).get();
+             Genre updateGenre = genreRepository.findById(genreId).get();
             updateGenre.setName(genreObject.getName());
             updateGenre.setDescription(genreObject.getDescription());
             return genreRepository.save(updateGenre);
