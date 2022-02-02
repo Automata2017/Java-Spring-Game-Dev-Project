@@ -16,15 +16,21 @@ import java.util.Optional;
 @RequestMapping(path = "/api")
 public class GenreController {
 
-    private GenreRepository genreRepository;
-
-    @Autowired
-    public void setGenreRepository(GenreRepository genreRepository){
-        this.genreRepository = genreRepository;
-
-    }
+//    private GenreRepository genreRepository;
+//
+//    @Autowired
+//    public void setGenreRepository(GenreRepository genreRepository){
+//        this.genreRepository = genreRepository;
+//
+//    }
 
     private GenreService genreService;
+
+    @Autowired
+    public void setGenreService(GenreService genreService){
+        this.genreService = genreService;
+
+    }
 
 
 
@@ -33,7 +39,7 @@ public class GenreController {
         return "Hello World";
     }
 
-    @GetMapping("/genres/")
+    @GetMapping(GenreRepository)
     public List<Genre> getAllGenres(){
         System.out.println("calling getAllGenres");
         return genreRepository.findAll();
