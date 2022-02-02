@@ -28,7 +28,6 @@ public class GenreController {
 
     @GetMapping("/genres/")
     public List<Genre> getAllGenres(){
-
         System.out.println("calling getAllGenres");
         return genreRepository.findAll();
     }
@@ -38,6 +37,8 @@ public class GenreController {
         System.out.println("calling createGenre");
 
         Genre genre = genreRepository.findByName(genreObject.getName());
+        if
+
         return genreRepository.save(genreObject);
     }
 
