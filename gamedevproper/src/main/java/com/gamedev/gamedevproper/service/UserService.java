@@ -1,4 +1,4 @@
 package com.gamedev.gamedevproper.service;
 
-public class DeveloperService {
+public class UserService {
 }

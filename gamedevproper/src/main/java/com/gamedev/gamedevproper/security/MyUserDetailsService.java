@@ -1,4 +1,4 @@
 package com.gamedev.gamedevproper.security;
 
-public class MyDeveloperDetails {
+public class MyUserDetailsService {
 }

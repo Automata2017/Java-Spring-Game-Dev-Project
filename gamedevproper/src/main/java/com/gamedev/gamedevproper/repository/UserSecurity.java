@@ -1,4 +1,4 @@
 package com.gamedev.gamedevproper.repository;
 
-public interface DeveloperSecurity {
+public interface UserSecurity {
 }
