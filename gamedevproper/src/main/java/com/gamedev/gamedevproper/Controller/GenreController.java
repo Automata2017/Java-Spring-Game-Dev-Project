@@ -63,12 +63,12 @@ public class GenreController {
     public Genre updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
         Optional<Genre> genre = genreRepository.findById(genreId);
         if(genre.isPresent()){
-//            if(genreObject.getName().equals(c))
-        } else {
             Genre updateGenre = genreRepository.findById(genreId).get();
             updateGenre.setName(genreObject.getName());
             updateGenre.setDescription(genreObject.getDescription());
             return genreRepository.save(updateGenre);
+        } else {
+            throw new InformationNotFoundException("genre with Id" + genreId + " not found");
         }
     }
 
