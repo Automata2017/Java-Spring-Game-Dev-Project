@@ -1,5 +1,6 @@
 package com.gamedev.gamedevproper.Controller;
 
+import com.gamedev.gamedevproper.exceptions.InformationExistException;
 import com.gamedev.gamedevproper.model.Genre;
 import com.gamedev.gamedevproper.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,11 @@ public class GenreController {
         System.out.println("calling createGenre");
 
         Genre genre = genreRepository.findByName(genreObject.getName());
-        if
-
-        return genreRepository.save(genreObject);
+        if(genre != null){
+            throw new InformationExistException("genre with name " + genre.getName() + " already exists");
+        } else {
+            return genreRepository.save(genreObject);
+        }
     }
 
     @GetMapping("/genres/{genreId}/")
