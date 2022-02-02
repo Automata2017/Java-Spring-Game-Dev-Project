@@ -4,6 +4,8 @@ import com.gamedev.gamedevproper.exceptions.InformationExistException;
 import com.gamedev.gamedevproper.exceptions.InformationNotFoundException;
 import com.gamedev.gamedevproper.model.Genre;
 import com.gamedev.gamedevproper.repository.GenreRepository;
+import com.gamedev.gamedevproper.service.GenreService;
+import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,8 @@ public class GenreController {
         this.genreRepository = genreRepository;
 
     }
+
+    private GenreService genreService;
 
 
 
