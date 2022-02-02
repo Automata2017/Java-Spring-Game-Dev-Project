@@ -23,7 +23,7 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    
+
 
     private VideogameRepository videogameRepository;
 
@@ -84,7 +84,7 @@ public class GenreService {
 
         Optional<Genre> genre= genreRepository.findById(genreId);
         videogameObject.setGenre(genre.get());
-        return videogameRepository.save();
+        return videogameRepository.save(videogameObject);
 
     }
 
