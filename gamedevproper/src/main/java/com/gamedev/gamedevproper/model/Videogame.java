@@ -1,16 +1,59 @@
 package com.gamedev.gamedevproper.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "videogames")
 public class Videogame {
 
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private String title;
+
+    @Column
     private String description;
+
+    @Column
     private boolean multiplayer;
+
+    @Column
     private boolean dlc;
+
+    @Column
     private int criticScore;
+
+    @Column
     private boolean isReleased;
 
-    
+    public Videogame() {
+    }
+
+    @Override
+    public String toString() {
+        return "Videogame{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", multiplayer=" + multiplayer +
+                ", dlc=" + dlc +
+                ", criticScore=" + criticScore +
+                ", isReleased=" + isReleased +
+                '}';
+    }
+
+    public Videogame(Long id, String title, String description, boolean multiplayer, boolean dlc, int criticScore, boolean isReleased) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.multiplayer = multiplayer;
+        this.dlc = dlc;
+        this.criticScore = criticScore;
+        this.isReleased = isReleased;
+    }
 
     public Long getId() {
         return id;
