@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -46,8 +47,11 @@ public class GenreController {
     }
 
     @GetMapping("/genres/{genreId}/")
-    public String getGenre(@PathVariable Long genreId){
-        return "getting the genre with id of " + genreId;
+    public Optional<Genre> getGenre(@PathVariable(value = "genreId") Long genreId){
+        Optional<Genre> genre = genreRepository.findById(genreId);
+
+        return genre;
+
     }
 
     @PutMapping("/genres/{genreId}/")
