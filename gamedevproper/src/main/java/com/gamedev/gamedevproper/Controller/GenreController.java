@@ -1,16 +1,17 @@
 package com.gamedev.gamedevproper.Controller;
 
-import com.gamedev.gamedevproper.exceptions.InformationExistException;
-import com.gamedev.gamedevproper.exceptions.InformationNotFoundException;
-import com.gamedev.gamedevproper.model.Genre;
-import com.gamedev.gamedevproper.repository.GenreRepository;
-import com.gamedev.gamedevproper.service.GenreService;
-import jdk.jfr.Category;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+        import com.gamedev.gamedevproper.exceptions.InformationExistException;
+        import com.gamedev.gamedevproper.exceptions.InformationNotFoundException;
+        import com.gamedev.gamedevproper.model.Genre;
+        import com.gamedev.gamedevproper.model.Videogame;
+        import com.gamedev.gamedevproper.repository.GenreRepository;
+        import com.gamedev.gamedevproper.service.GenreService;
+        import jdk.jfr.Category;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+        import java.util.List;
+        import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -69,6 +70,14 @@ public class GenreController {
         System.out.println("calling deleteGenre");
         return genreService.deleteGenre(genreId);
     }
+
+    @PostMapping("/genres/{genreId}/videogames/")
+    public Videogame createGenreVideogame(@PathVariable(value = "genreId") Long genreId, @RequestBody Videogame videogameObject){
+        System.out.println("calling createGenreVideogame===>");
+
+        return genreService.createGenreVideogame(genreId, videogameObject);
+    }
+
 
 
 }

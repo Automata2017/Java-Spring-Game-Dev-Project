@@ -3,6 +3,7 @@ package com.gamedev.gamedevproper.service;
 import com.gamedev.gamedevproper.exceptions.InformationExistException;
 import com.gamedev.gamedevproper.exceptions.InformationNotFoundException;
 import com.gamedev.gamedevproper.model.Genre;
+import com.gamedev.gamedevproper.model.Videogame;
 import com.gamedev.gamedevproper.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,14 @@ public class GenreService {
         } else {
             throw new InformationNotFoundException("genre with id" + genreId + " not found");
         }
+    }
+
+    public Videogame createGenreVideogame(Long genreId, Videogame videogameObject){
+
+        Optional<Genre> genre= genreRepository.findById(genreId);
+        videogameObject.setGenre(genre.get());
+        return videogameRepository.save()
+
     }
 
 }

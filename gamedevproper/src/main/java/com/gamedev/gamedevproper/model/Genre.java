@@ -1,5 +1,7 @@
 package com.gamedev.gamedevproper.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,11 @@ public class Genre {
 
     @Column
     private String description;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "genre_Id")
+    private Genre genre;
 
     public Genre() {
     }
