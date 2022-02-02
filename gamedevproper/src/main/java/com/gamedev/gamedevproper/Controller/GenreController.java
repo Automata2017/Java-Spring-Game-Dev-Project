@@ -30,10 +30,7 @@ public class GenreController {
     @Autowired
     public void setGenreService(GenreService genreService){
         this.genreService = genreService;
-
     }
-
-
 
     @GetMapping(path = "/hello-world/")
     public String getHelloWorld(){
@@ -77,6 +74,13 @@ public class GenreController {
 
         return genreService.createGenreVideogame(genreId, videogameObject);
     }
+
+    @GetMapping("/genres/{genreId}/videogames/")
+    public List<Videogame> getGenreVideogame(@PathVariable(value = "genreId") Long genreId){
+        return genreService.getGenreVideogame(genreId);
+    }
+
+
 
 
 
