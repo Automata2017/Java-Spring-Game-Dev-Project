@@ -65,13 +65,7 @@ public class GenreController {
 
     @DeleteMapping("/genres/{genreId}/")
     public Optional<Genre> deleteGenre(@PathVariable(value = "genreId") Long genreId){
-        Optional<Genre> genre = genreRepository.findById(genreId);
-        if(genre.isPresent()){
-            genreRepository.deleteById(genreId);
-            return genre;
-        } else {
-            throw new InformationNotFoundException("genre with id" + genreId + " not found");
-        }
+        return genreService.deleteGenre(genreId);
     }
 
 

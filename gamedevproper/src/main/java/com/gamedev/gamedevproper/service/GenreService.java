@@ -59,8 +59,7 @@ public class GenreService {
         }
     }
 
-    @DeleteMapping("/genres/{genreId}/")
-    public Optional<Genre> deleteGenre(@PathVariable(value = "genreId") Long genreId){
+    public Optional<Genre> deleteGenre(Long genreId){
         Optional<Genre> genre = genreRepository.findById(genreId);
         if(genre.isPresent()){
             genreRepository.deleteById(genreId);
