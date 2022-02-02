@@ -33,9 +33,7 @@ public class GenreService {
     }
 
 
-    public List<Genre> getAllGenres(){
-        return genreRepository.findAll();
-    }
+    public List<Genre> getAllGenres(){return genreRepository.findAll();}
 
     public Genre createGenre(Genre genreObject){
 
