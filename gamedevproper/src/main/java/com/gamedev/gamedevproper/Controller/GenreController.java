@@ -48,23 +48,25 @@ public class GenreController {
     @PostMapping("/genres/")
     public Genre createGenre(@RequestBody Genre genreObject){
         System.out.println("calling createGenre");
-        return genreService.createGenre(genreObject)
+        return genreService.createGenre(genreObject);
     }
 
     @GetMapping("/genres/{genreId}/")
     public Optional<Genre> getGenre(@PathVariable(value = "genreId") Long genreId){
-
+        System.out.println("calling getGenre");
         return genreService.getGenre(genreId);
 
     }
 
     @PutMapping("/genres/{genreId}/")
     public Genre updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
+        System.out.println("calling updateGenre");
         return genreService.updateGenre(genreId, genreObject);
     }
 
     @DeleteMapping("/genres/{genreId}/")
     public Optional<Genre> deleteGenre(@PathVariable(value = "genreId") Long genreId){
+        System.out.println("calling deleteGenre");
         return genreService.deleteGenre(genreId);
     }
 
