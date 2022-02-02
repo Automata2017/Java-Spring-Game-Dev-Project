@@ -1,6 +1,7 @@
 package com.gamedev.gamedevproper.Controller;
 
 import com.gamedev.gamedevproper.exceptions.InformationExistException;
+import com.gamedev.gamedevproper.exceptions.InformationNotFoundException;
 import com.gamedev.gamedevproper.model.Genre;
 import com.gamedev.gamedevproper.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,11 @@ public class GenreController {
     public Optional<Genre> getGenre(@PathVariable(value = "genreId") Long genreId){
 
         Optional<Genre> genre = genreRepository.findById(genreId);
-
-
-        return genre;
+        if(genre.isPresent()){
+            return genre;
+        } else {
+            throw new InformationNotFoundException("genre with Id " + genre + " not found");
+        }
 
     }
 
