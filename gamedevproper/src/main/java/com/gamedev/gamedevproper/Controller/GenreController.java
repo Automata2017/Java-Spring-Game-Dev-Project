@@ -6,10 +6,12 @@ package com.gamedev.gamedevproper.Controller;
         import com.gamedev.gamedevproper.model.Videogame;
         import com.gamedev.gamedevproper.repository.GenreRepository;
         import com.gamedev.gamedevproper.service.GenreService;
-        import jdk.jfr.Category;
         import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.http.HttpStatus;
+        import org.springframework.http.ResponseEntity;
         import org.springframework.web.bind.annotation.*;
 
+        import java.util.HashMap;
         import java.util.List;
         import java.util.Optional;
 
@@ -71,7 +73,6 @@ public class GenreController {
     @PostMapping("/genres/{genreId}/videogames/")
     public Videogame createGenreVideogame(@PathVariable(value = "genreId") Long genreId, @RequestBody Videogame videogameObject){
         System.out.println("calling createGenreVideogame===>");
-
         return genreService.createGenreVideogame(genreId, videogameObject);
     }
 
@@ -80,8 +81,20 @@ public class GenreController {
         return genreService.getGenreVideogame(genreId);
     }
 
+    @PutMapping("/genres/{genreId}/videogames/{videogameId}/")
+    public Videogame updateGenreVideogame(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "videogameId") Long videogameId, @RequestBody Videogame videogameObject){
+        System.out.println("calling updateGenreVideogame ===>");
+        return genreService.updateGenreVideogame(genreId, videogameId, videogameObject);
+    }
 
-
-
+    @DeleteMapping("/genres/{genreId}/videogames/{videogameId}/")
+    public ResponseEntity<HashMap> deleteGenreVideogame(
+            @PathVariable(value = "genreId") Long genreId, @PathVariable(value = "videogameId") Long videogameId) {
+        System.out.println("calling getGenreVideogame ==>");
+        genreService.deleteGenreVideogame(genreId, videogameId);
+        HashMap responseMessage = new HashMap();
+        responseMessage.put("status", "videogame with id: " + videogameId + " was successfully deleted.");
+        return new ResponseEntity<HashMap>(responseMessage, HttpStatus.OK);
+    }
 
 }
