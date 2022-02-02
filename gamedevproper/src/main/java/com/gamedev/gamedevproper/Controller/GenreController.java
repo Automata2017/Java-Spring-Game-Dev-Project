@@ -39,10 +39,10 @@ public class GenreController {
         return "Hello World";
     }
 
-    @GetMapping(GenreRepository)
+    @GetMapping(/genres/)
     public List<Genre> getAllGenres(){
         System.out.println("calling getAllGenres");
-        return genreRepository.findAll();
+        return genreService.getAllGenres();
     }
 
     @PostMapping("/genres/")
