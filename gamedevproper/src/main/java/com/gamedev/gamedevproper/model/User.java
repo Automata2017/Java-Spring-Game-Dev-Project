@@ -22,26 +22,57 @@ public class User {
     @Column(unique = true)
     private String emailAddress;
 
-    @Column(access = JsonProperty.Access.WRITE_ONLY)
+    @Column
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id", refrencedColumnName ="id")
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-    @OneToOne(mappedBy = "user")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Genre> genreList;
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
 
-    @OneToOne(mappedBy = "user")
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public List<Genre> getGenreList() {
+        return categoryList;
+    }
+
+    public void setGenreList(List<Genre> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    public List<Videogame> getVideogameList() {
+        return recipeList;
+    }
+
+    public void setVideogameList(List<Videogame> recipeList) {
+        this.recipeList = recipeList;
+    }
+
+    @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private  List<Videogame> videogameList;
+    private List<Genre> categoryList;
+
+
+    @OneToMany(mappedBy = "user")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Videogame> recipeList;
+
 
     public User(Long id, String userName, String emailAddress, String password) {
         this.id = id;
         this.userName = userName;
         this.emailAddress = emailAddress;
         this.password = password;
+    }
+
+    public User() {
     }
 
     public Long getId() {

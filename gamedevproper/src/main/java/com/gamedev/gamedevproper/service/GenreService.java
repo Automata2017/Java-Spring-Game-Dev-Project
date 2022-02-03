@@ -58,14 +58,17 @@ public class GenreService {
         if(genre != null){
             throw new InformationExistException("genre with name " + genre.getName() + " already exists");
         } else {
-            genreObject.setUser(userDetails.getUser())
+            genreObject.setUser(userDetails.getUser());
             return genreRepository.save(genreObject);
         }
     }
 
     public Optional<Genre> getGenre(Long genreId){
 
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Optional<Genre> genre = genreRepository.findById(genreId);
+
         if(genre.isPresent()){
             return genre;
         } else {
@@ -75,15 +78,26 @@ public class GenreService {
     }
 
     public Genre updateGenre(Long genreId, Genre genreObject){
-        Optional<Genre> genre = genreRepository.findById(genreId);
-        if(genre.isPresent()){
-            Genre updateGenre = genreRepository.findById(genreId).get();
-            updateGenre.setName(genreObject.getName());
-            updateGenre.setDescription(genreObject.getDescription());
-            return genreRepository.save(updateGenre);
+//        Optional<Genre> genre = genreRepository.findById(genreId);
+//        if(genre.isPresent()){
+//            Genre updateGenre = genreRepository.findById(genreId).get();
+//            updateGenre.setName(genreObject.getName());
+//            updateGenre.setDescription(genreObject.getDescription());
+//            return genreRepository.save(updateGenre);
+//        } else {
+//            throw new InformationNotFoundException("genre with Id" + genreId + " not found");
+//        }
+
+        System.out.println("service calling updateGenre ===>");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        if(genre == null) {
+            throw new InformationNotFoundException("genre with id " + genreId + " not found");
         } else {
-            throw new InformationNotFoundException("genre with Id" + genreId + " not found");
+            genre.setDescription(genreObject.getDescription());
         }
+
     }
 
     public Optional<Genre> deleteGenre(Long genreId){
