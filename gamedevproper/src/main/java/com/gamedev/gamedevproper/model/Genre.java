@@ -1,8 +1,11 @@
 package com.gamedev.gamedevproper.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "genres")
@@ -19,12 +22,28 @@ public class Genre {
     @Column
     private String description;
 
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "genre_Id")
-    private Genre genre;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Genre() {
+    }
+
+    @OneToMany(mappedBy = "category", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Videogame> videogameList;
+
+    public List<Videogame> getVideogameList(){
+        return videogameList;
     }
 
     public Genre(Long id, String name, String description) {

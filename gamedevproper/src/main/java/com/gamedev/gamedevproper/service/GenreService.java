@@ -56,7 +56,7 @@ public class GenreService {
 
         Genre genre = genreRepository.findByUserIdAndName(userDetails.getUser().getId(), genreObject.getName());
         if(genre != null){
-            throw new InformationExistException("genre with name " + genre.getName() + " already exists");
+            throw new InformationExistException("genre with title " + genre.getTitle() + " already exists");
         } else {
             genreObject.setUser(userDetails.getUser());
             return genreRepository.save(genreObject);
@@ -96,25 +96,27 @@ public class GenreService {
             throw new InformationNotFoundException("genre with id " + genreId + " not found");
         } else {
             genre.setDescription(genreObject.getDescription());
+            genre.setName(genreObject.getName());
+            genre.setUser(userDetails.getUser());
         }
-
     }
 
     public Optional<Genre> deleteGenre(Long genreId){
-        Optional<Genre> genre = genreRepository.findById(genreId);
-        if(genre.isPresent()){
-            genreRepository.deleteById(genreId);
-            return genre;
-        } else {
-            throw new InformationNotFoundException("genre with id" + genreId + " not found");
-        }
+        System.out.println();
     }
 
     public Videogame createGenreVideogame(Long genreId, Videogame videogameObject){
 
-        Optional<Genre> genre= genreRepository.findById(genreId);
-        videogameObject.setGenre(genre.get());
-        return videogameRepository.save(videogameObject);
+        System.out.println("service calling createGenreVideogame ===>");
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        if (genre == null){
+            throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre does not exist");
+        }
+        Videogame videogame = videogameRepository.findByNameAndUserId(videogameObject.getTitle(), userDetails.getUser().getId());
+        if (videogame != null) {
+            throw new InformationExistException("videogame title " + videogame.getTitle())
+        }
 
     }
 
