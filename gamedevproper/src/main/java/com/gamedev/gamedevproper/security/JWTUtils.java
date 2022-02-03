@@ -1,6 +1,10 @@
 package com.gamedev.gamedevproper.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
@@ -30,6 +34,17 @@ public class JWTUtils {
             jwt = AuthorizationHeader.substring(7);
             username = jwtUtils.extractUsername(jwt);
         }
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
+            if (jwtUtils.validateToken(jwt, userDetails)) {
+                UsernamePasswordAuthenticationToken
+                        usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+        }  filterChain.doFilter(httpServletRequest, httpServletResponse);
+    }
 
 
 
