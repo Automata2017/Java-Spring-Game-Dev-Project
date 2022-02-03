@@ -38,7 +38,7 @@ public class Genre {
     public Genre() {
     }
 
-    @OneToMany(mappedBy = "category", orphanRemoval = true)
+    @OneToMany(mappedBy = "genre", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Videogame> videogameList;
 

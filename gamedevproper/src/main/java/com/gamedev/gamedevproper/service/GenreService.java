@@ -96,16 +96,16 @@ public class GenreService {
     public Videogame createGenreVideogame(Long genreId, Videogame videogameObject){
 
         System.out.println("service calling createGenreVideogame ===>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        Optional<Genre> genreEntity = genreRepository.findById(genreId);
+        Genre genre = genreEntity.get();
+
         if (genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre does not exist");
         }
-        Videogame videogame = videogameRepository.findByNameAndUserId(videogameObject.getTitle(), userDetails.getUser().getId());
+        Videogame videogame = videogameRepository.findByTitle(videogameObject.getTitle());
         if (videogame != null) {
             throw new InformationExistException("videogame title " + videogame.getTitle());
         }
-        videogameObject.setUser(userDetails.getUser());
         videogameObject.setGenre(genre);
         return videogameRepository.save(videogameObject);
 
@@ -113,18 +113,16 @@ public class GenreService {
 
     public List<Videogame> getGenreVideogames(Long genreId){
         System.out.println("service calling getGenreVideogames");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        Optional<Genre> genre = genreRepository.findById(genreId);
         if(genre == null) {
             throw new InformationNotFoundException("genre with id " + genreId + " does not belong to this user or genre does not exist");
         }
-        return genre.getVideogameList();
+        return genre.get().getVideogameList();
     }
 
     public Videogame getGenreVideogame(Long genreId, Long videogameId){
         System.out.println("service calling createGenreVideogame ===>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        Optional<Genre> genre = genreRepository.findById(genreId);
         if (genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre does not exist");
         }
@@ -138,15 +136,14 @@ public class GenreService {
 
     public Videogame updateGenreVideogame(Long genreId, Long videogameId, Videogame videogameObject){
         System.out.println("service calling updateGenreVideogame ===>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        Optional<Genre> genre = genreRepository.findById(genreId);
         if (genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre does not exist");
         }
         Optional<Videogame> videogame = videogameRepository.findByGenreId(
                 genreId).stream().filter(p -> p.getId().equals(videogameId)).findFirst();
-        Videogame oldVideogame = videogameRepository.findByNameAndUserIdAndIdIsNot(
-                videogameObject.getTitle(), userDetails.getUser().getId(), videogameId);
+        Videogame oldVideogame = videogameRepository.findByTitleAndIdIsNot(
+                videogameObject.getTitle(), videogameId);
         if(oldVideogame != null){
             throw new InformationNotFoundException("recipe with name " + oldVideogame.getTitle() + " already exists");
         }
@@ -162,8 +159,7 @@ public class GenreService {
 
     public void deleteGenreVideogame(Long genreId, Long videogameId){
         System.out.println("service calling deleteGenreVideogame ===>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        Optional<Genre> genre = genreRepository.findById(genreId);
         if (genre == null){
             throw new InformationNotFoundException("genre with id " + genreId + " not belongs to this user or genre does not exist");
         }
