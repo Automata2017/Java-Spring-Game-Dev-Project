@@ -99,7 +99,7 @@ public class Videogame {
         this.description = description;
     }
 
-    public boolean isMultiplayer() {
+    public boolean getMultiplayer() {
         return multiplayer;
     }
 
@@ -107,7 +107,7 @@ public class Videogame {
         this.multiplayer = multiplayer;
     }
 
-    public boolean isDlc() {
+    public boolean getDlc() {
         return dlc;
     }
 
@@ -123,12 +123,12 @@ public class Videogame {
         this.criticScore = criticScore;
     }
 
-    public boolean isReleased() {
+    public boolean getIsReleased() {
         return isReleased;
     }
 
-    public void setReleased(boolean released) {
-        isReleased = released;
+    public void setIsReleased(boolean isReleased) {
+        this.isReleased = isReleased;
     }
 
     public Genre getGenre() {
