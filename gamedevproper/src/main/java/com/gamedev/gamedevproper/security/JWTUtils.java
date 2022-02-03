@@ -16,35 +16,7 @@ import java.io.IOException;
 @Component
 public class JWTUtils {
 
-    @Autowired
-    private MyUserDetailsService myUserDetailsService;
-
-    @Autowired
-    private JWTUtils jwtUtils;
-
-    protected void doFilterInternal(HttpServletRequest httpServletRequest,
-                                    HttpServletResponse httpServletResponse, FilterChain filterChain)
-            throws ServletException, IOException {
-
-        final String AuthorizationHeader = httpServletRequest.getHeader("Authorization");
-
-        String username = null;
-        String jwt = null;
-        if (AuthorizationHeader != null && AuthorizationHeader.startsWith("Bearer ")) {
-            jwt = AuthorizationHeader.substring(7);
-            username = jwtUtils.extractUsername(jwt);
-        }
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
-            if (jwtUtils.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken
-                        usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            }
-        }  filterChain.doFilter(httpServletRequest, httpServletResponse);
-    }
+    
 
 
 
