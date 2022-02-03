@@ -1,4 +1,25 @@
 package com.gamedev.gamedevproper.security;
 
-public class MyUserDetailsService {
+import com.gamedev.gamedevproper.model.User;
+import com.gamedev.gamedevproper.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyUserDetailsService implements UserDetailsService {
+
+    private UserService userService;
+
+    public void setUserService(UserService userService){
+        this.userService = userService;
+    }
+
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
+        User user = userService.findUserByEmailAddress(email);
+        return new MyUserDetails(user);
+    }
+
+
 }
