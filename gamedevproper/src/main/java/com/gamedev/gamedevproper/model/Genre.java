@@ -46,6 +46,10 @@ public class Genre {
         return videogameList;
     }
 
+    public void setVideogameList(List<Videogame> videogameList) {
+        this.videogameList = videogameList;
+    }
+
     public Genre(Long id, String name, String description) {
         this.id = id;
         this.name = name;

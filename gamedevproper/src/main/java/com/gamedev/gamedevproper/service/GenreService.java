@@ -6,7 +6,6 @@ import com.gamedev.gamedevproper.model.Genre;
 import com.gamedev.gamedevproper.model.Videogame;
 import com.gamedev.gamedevproper.repository.GenreRepository;
 import com.gamedev.gamedevproper.repository.VideogameRepository;
-import com.gamedev.gamedevproper.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,73 +34,62 @@ public class GenreService {
 
 
     public List<Genre> getAllGenres(){
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        System.out.println(userDetails.getUser().getId());
 
-        List<Genre> genre = genreRepository.findByUserId(userDetails.getUser().getId());
-
-        if(genre.isEmpty()){
-            throw new InformationNotFoundException("no category found for user is " + userDetails.getUser().getId() + " not found");
-        } else {
-            return genre;
-        }
+        return genreRepository.findAll();
 
     }
 
     public Genre createGenre(Genre genreObject){
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-
-        Genre genre = genreRepository.findByUserIdAndName(userDetails.getUser().getId(), genreObject.getName());
-        if(genre != null){
+        Genre genre = genreRepository.findByName(genreObject.getName());
+        if (genre != null) {
             throw new InformationExistException("genre with name " + genre.getName() + " already exists");
         } else {
-            genreObject.setUser(userDetails.getUser());
             return genreRepository.save(genreObject);
         }
+
+
     }
 
     public Optional<Genre> getGenre(Long genreId){
 
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Optional<Genre> genre = genreRepository.findById(genreId);
-
-        if(genre.isPresent()){
+        Optional genre = genreRepository.findById(genreId);
+        if (genre.isPresent()) {
             return genre;
         } else {
-            throw new InformationNotFoundException("genre with Id " + genre + " not found");
+            throw new InformationNotFoundException("Genre with id " + genreId + " not found");
         }
 
     }
 
     public Genre updateGenre(Long genreId, Genre genreObject){
 
-        System.out.println("service calling updateGenre ===>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
-        if(genre == null) {
-            throw new InformationNotFoundException("genre with id " + genreId + " not found");
+        Optional<Genre> genre = genreRepository.findById(genreId);
+        if (genre.isPresent()) {
+            if (genreObject.getName().equals(genre.get().getName())) {
+                System.out.println("Same");
+                throw new InformationExistException("genre " + genre.get().getName() + " is already exists");
+            } else {
+                Genre updateGenre = genreRepository.findById(genreId).get();
+                updateGenre.setName(genreObject.getName());
+                updateGenre.setDescription(genreObject.getDescription());
+                return genreRepository.save(updateGenre);
+            }
         } else {
-            genre.setDescription(genreObject.getDescription());
-            genre.setName(genreObject.getName());
-            genre.setUser(userDetails.getUser());
-            return genreRepository.save(genre);
+            throw new InformationNotFoundException("genre with id " + genreId + " not found");
         }
     }
 
     public String deleteGenre(Long genreId){
-        System.out.println("service calling deleteGenre ===>");
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        Genre genre = genreRepository.findByIdAndUserId(genreId, userDetails.getUser().getId());
+        Optional<Genre> genre = genreRepository.findById(genreId);
+
         if (genre == null) {
             throw new InformationNotFoundException("genre with id " + genreId + " not found");
+
         } else {
             genreRepository.deleteById(genreId);
-            return "genre with id " + genreId + "has been successfully deleted";
+            return "Genre with id " + genreId + " has been deleted";
         }
     }
 
