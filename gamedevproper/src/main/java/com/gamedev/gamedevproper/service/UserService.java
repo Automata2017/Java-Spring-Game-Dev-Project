@@ -1,5 +1,6 @@
 package com.gamedev.gamedevproper.service;
 
+import com.gamedev.gamedevproper.model.User;
 import com.gamedev.gamedevproper.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +25,8 @@ public class UserService {
     @Autowired
     private JWTUtils jwtUtils;
 
-    
+    public User findUserByEmailAddress(String email){
+        return userRepository.findUserByEmailAddress(email);
+    }
 
 }
