@@ -65,10 +65,12 @@ public class GenreController {
     }
 
     @DeleteMapping("/genres/{genreId}/")
-    public Optional<Genre> deleteGenre(@PathVariable(value = "genreId") Long genreId){
+    public String deleteGenre(@PathVariable(value = "genreId") Long genreId){
         System.out.println("calling deleteGenre");
         return genreService.deleteGenre(genreId);
     }
+
+
 
     @PostMapping("/genres/{genreId}/videogames/")
     public Videogame createGenreVideogame(@PathVariable(value = "genreId") Long genreId, @RequestBody Videogame videogameObject){
@@ -77,8 +79,13 @@ public class GenreController {
     }
 
     @GetMapping("/genres/{genreId}/videogames/")
-    public List<Videogame> getGenreVideogame(@PathVariable(value = "genreId") Long genreId){
-        return genreService.getGenreVideogame(genreId);
+    public List<Videogame>getGenreVideogames(@PathVariable(value = "genreId") Long genreId){
+        return genreService.getGenreVideogames(genreId);
+    }
+
+    @GetMapping("/genres/{genreId}/videogames/{videogameId}/")
+    public Videogame getGenreVideogame(@PathVariable(value = "genreId") Long genreId, @PathVariable(value = "videogameId") Long videogameId){
+        return genreService.getGenreVideogame(genreId, videogameId);
     }
 
     @PutMapping("/genres/{genreId}/videogames/{videogameId}/")

@@ -62,6 +62,19 @@ public class Videogame {
         this.isReleased = isReleased;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
     public Long getId() {
         return id;
     }
