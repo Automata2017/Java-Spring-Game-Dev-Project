@@ -1,6 +1,8 @@
 package com.gamedev.gamedevproper.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,18 @@ public class UserProfile {
 
     @Column
     private String profileDescription;
+
+    public UserProfile(Long id, String firstName, String lastName, String profileDescription) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profileDescription = profileDescription;
+    }
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "userProfile")
+    private User user;
+
 
 
 }
