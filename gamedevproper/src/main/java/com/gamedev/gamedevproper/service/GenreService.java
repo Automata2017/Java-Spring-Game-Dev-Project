@@ -6,7 +6,9 @@ import com.gamedev.gamedevproper.model.Genre;
 import com.gamedev.gamedevproper.model.Videogame;
 import com.gamedev.gamedevproper.repository.GenreRepository;
 import com.gamedev.gamedevproper.repository.VideogameRepository;
+import com.gamedev.gamedevproper.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,14 +35,30 @@ public class GenreService {
     }
 
 
-    public List<Genre> getAllGenres(){return genreRepository.findAll();}
+    public List<Genre> getAllGenres(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        System.out.println(userDetails.getUser().getId());
+
+        List<Genre> genre = genreRepository.findByUserId(userDetails.getUser().getId());
+
+        if(genre.isEmpty()){
+            throw new InformationNotFoundException("no category found for user is " + userDetails.getUser().getId() + " not found");
+        } else {
+            return genre;
+        }
+
+    }
 
     public Genre createGenre(Genre genreObject){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Genre genre = genreRepository.findByName(genreObject.getName());
+
+        Genre genre = genreRepository.findByUserIdAndName(userDetails.getUser().getId(), genreObject.getName());
         if(genre != null){
             throw new InformationExistException("genre with name " + genre.getName() + " already exists");
         } else {
+            genreObject.setUser(userDetails.getUser())
             return genreRepository.save(genreObject);
         }
     }
