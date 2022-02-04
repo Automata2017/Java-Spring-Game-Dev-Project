@@ -11,9 +11,9 @@ import java.util.List;
 @Table(name = "genres")
 public class Genre {
 
-    @Id
+    @Id // @Id means primary key
     @Column
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // equivalent to SERIAL in SQL
     private Long id;
 
     @Column
@@ -22,32 +22,33 @@ public class Genre {
     @Column
     private String description;
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
     }
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
-    public Genre() {
-    }
 
     @OneToMany(mappedBy = "genre", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Videogame> videogameList;
 
-    public List<Videogame> getVideogameList(){
+    public List<Videogame> getVideogameList() {
         return videogameList;
     }
 
     public void setVideogameList(List<Videogame> videogameList) {
         this.videogameList = videogameList;
+    }
+
+    public Genre() {
     }
 
     public Genre(Long id, String name, String description) {
@@ -88,4 +89,5 @@ public class Genre {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

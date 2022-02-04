@@ -37,6 +37,14 @@ public class Videogame {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
     public Videogame() {
     }
 
@@ -132,11 +140,5 @@ public class Videogame {
         this.isReleased = isReleased;
     }
 
-    public Genre getGenre() {
-        return genre;
-    }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
 }

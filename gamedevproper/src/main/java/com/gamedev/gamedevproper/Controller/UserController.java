@@ -1,5 +1,6 @@
 package com.gamedev.gamedevproper.Controller;
 
+import com.gamedev.gamedevproper.model.Request.LoginRequest;
 import com.gamedev.gamedevproper.service.UserService;
 import com.gamedev.gamedevproper.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ public class UserController {
 
     private UserService userService;
 
-
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -27,6 +29,11 @@ public class UserController {
     @PostMapping("/register/")
     public User createUser(@RequestBody User userObject){
         return userService.createUser(userObject);
+    }
+
+    @PostMapping("/login/")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+        return userService.loginUser(loginRequest);
     }
 
 

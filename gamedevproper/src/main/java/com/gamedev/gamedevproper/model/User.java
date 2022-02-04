@@ -40,29 +40,29 @@ public class User {
     }
 
     public List<Genre> getGenreList() {
-        return categoryList;
+        return genreList;
     }
 
-    public void setGenreList(List<Genre> categoryList) {
-        this.categoryList = categoryList;
+    public void setGenreList(List<Genre> genreList) {
+        this.genreList = genreList;
     }
 
     public List<Videogame> getVideogameList() {
-        return recipeList;
+        return videogameList;
     }
 
-    public void setVideogameList(List<Videogame> recipeList) {
-        this.recipeList = recipeList;
+    public void setVideogameList(List<Videogame> videogameList) {
+        this.videogameList = videogameList;
     }
 
     @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Genre> categoryList;
+    private List<Genre> genreList;
 
 
     @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Videogame> recipeList;
+    private List<Videogame> videogameList;
 
 
     public User(Long id, String userName, String emailAddress, String password) {

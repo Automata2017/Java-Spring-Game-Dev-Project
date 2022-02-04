@@ -30,12 +30,13 @@ public class GenreController {
     private GenreService genreService;
 
     @Autowired
-    public void setGenreService(GenreService genreService){
+    public void setGenreService(GenreService genreService) {
         this.genreService = genreService;
     }
 
-    @GetMapping(path = "/hello-world/")
-    public String getHelloWorld(){
+    //@GetMapping = get method in rest terms
+    @GetMapping("/hello-world/")
+    public String helloWorld() {
         return "Hello World";
     }
 
@@ -45,41 +46,52 @@ public class GenreController {
         return genreService.getAllGenres();
     }
 
+
+
     @PostMapping("/genres/")
-    public Genre createGenre(@RequestBody Genre genreObject){
-        System.out.println("calling createGenre");
+    public Genre createGenre(@RequestBody Genre genreObject) {
+        System.out.println();
         return genreService.createGenre(genreObject);
+
+
     }
 
     @GetMapping("/genres/{genreId}/")
-    public Optional<Genre> getGenre(@PathVariable(value = "genreId") Long genreId){
-        System.out.println("calling getGenre");
+    public Optional<Genre> getGenre(@PathVariable(value = "genreId") Long genreId) {
         return genreService.getGenre(genreId);
 
+
     }
+
+
 
     @PutMapping("/genres/{genreId}/")
     public Genre updateGenre(@PathVariable(value = "genreId") Long genreId, @RequestBody Genre genreObject){
-        System.out.println("calling updateGenre");
+        System.out.println("calling updateGenre ===>");
         return genreService.updateGenre(genreId, genreObject);
     }
 
+
     @DeleteMapping("/genres/{genreId}/")
     public String deleteGenre(@PathVariable(value = "genreId") Long genreId){
-        System.out.println("calling deleteGenre");
+        System.out.println("calling deleteGenre ===>");
         return genreService.deleteGenre(genreId);
+
+
     }
+
 
 
 
     @PostMapping("/genres/{genreId}/videogames/")
     public Videogame createGenreVideogame(@PathVariable(value = "genreId") Long genreId, @RequestBody Videogame videogameObject){
         System.out.println("calling createGenreVideogame===>");
+
         return genreService.createGenreVideogame(genreId, videogameObject);
     }
 
     @GetMapping("/genres/{genreId}/videogames/")
-    public List<Videogame>getGenreVideogames(@PathVariable(value = "genreId") Long genreId){
+    public List<Videogame> getGenreVideogames(@PathVariable(value = "genreId") Long genreId){
         return genreService.getGenreVideogames(genreId);
     }
 

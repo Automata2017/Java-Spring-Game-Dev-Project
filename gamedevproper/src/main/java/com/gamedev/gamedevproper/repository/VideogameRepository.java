@@ -13,7 +13,4 @@ public interface VideogameRepository extends JpaRepository<Videogame, Long> {
     Videogame findByTitleAndUserId (String name, Long userId);
     Videogame findByTitleAndUserIdAndIdIsNot (String name, Long userId, Long videogameId);
 
-    Videogame findByTitle(String title);
-
-    Videogame findByTitleAndIdIsNot(String title, Long videogameId);
 }
